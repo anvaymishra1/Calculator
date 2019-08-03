@@ -11,34 +11,33 @@ class HomePageState extends State<HomePage> {
   var a = " ";
   void equal() {
     setState(() {
-      var temp ='';
-      var temp2='';
+      var temp = '';
+      var temp2 = '';
       int j = 0;
       int i = 0;
       if (j == 0) {
-        for (i=0; i < a.length; i++) {
+        for (i = 0; i < a.length; i++) {
           if (a[i] == '*' || a[i] == '/' || a[i] == '-' || a[i] == '+') {
             sign = a[i];
             j++;
             break;
           } else
-            temp+=a[i];
+            temp += a[i];
         }
-       num1=double.parse(temp);    
+        num1 = double.parse(temp);
       }
-      for (j=i+1; j < a.length; j++) {
-        temp2=temp2+a[j];
+      for (j = i + 1; j < a.length; j++) {
+        temp2 = temp2 + a[j];
       }
-      num2=double.parse(temp2);
+      num2 = double.parse(temp2);
       if (sign == '+')
         sum = num1 + num2;
       else if (sign == '-')
         sum = num1 - num2;
       else if (sign == '*')
         sum = num1 * num2;
-      else if (sign == '/')
-        sum = num1 / num2;
-      a=sum.toString();
+      else if (sign == '/') sum = num1 / num2;
+      a = sum.toString();
     });
   }
 
@@ -136,6 +135,12 @@ class HomePageState extends State<HomePage> {
     });
   }
 
+  void clrscr() {
+    setState(() {
+      a = '';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -143,12 +148,14 @@ class HomePageState extends State<HomePage> {
           child: new Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          new Text(
-            "$a",
-            style: new TextStyle(
-                fontSize: 50.0,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold),
+          SingleChildScrollView( scrollDirection: Axis.horizontal ,reverse: true,
+            child: new Text(
+              "$a",
+              style: new TextStyle(
+                  fontSize: 50.0,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
           new Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -292,15 +299,15 @@ class HomePageState extends State<HomePage> {
                     height: 125.0,
                     minWidth: 130.0,
                   ),
-                  new MaterialButton(
-                    onPressed: clear,
-                    child: IconButton(
-                      icon: new Icon(Icons.backspace),
-                      onPressed: clear,
-                    ),
-                    color: Colors.black,
-                    height: 125.0,
-                  ),
+                  GestureDetector(
+                      onTap: clear,
+                      onLongPress: clrscr,
+                      child: Container(
+                        color: Colors.black,
+                        child: Icon(Icons.backspace),
+                        height: 125.0,
+                        width: 88.0,
+                      )),
                   new MaterialButton(
                     child: new Text(
                       '=',
